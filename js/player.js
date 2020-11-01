@@ -24,10 +24,12 @@ class Player {
   }
 
   move(dir) {
-    console.log("move");
     dir === 'top' ? this.playerPos.y -= 20 : null; 
     dir === 'bottom' ? this.playerPos.y += 20 : null;
     dir === 'left' ? this.playerPos.x -= 20 : null;
     dir === 'right' ? this.playerPos.x += 20 : null;
+    // this.isCollision() ? this.move(): null;
   }
+
 }
+

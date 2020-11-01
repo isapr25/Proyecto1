@@ -19,6 +19,7 @@ const Game = {
       right: 'ArrowRight'
   },
     enemy: [],
+    wall:[],
 
     init(id) {
         this.canvasTag = document.getElementById(id);
@@ -28,10 +29,11 @@ const Game = {
         this.drawAll() 
         this.setEventListeners()
         this.generateEnemy()
+        this.createWall()
     },
 
     setDimensions() {
-        this.canvasSize.w = 1000
+        this.canvasSize.w = 1050
         this.canvasSize.h = 700
         this.canvasTag.setAttribute('width', this.canvasSize.w)
         this.canvasTag.setAttribute('height', this.canvasSize.h)
@@ -47,10 +49,13 @@ const Game = {
 
   },
      
-  // createWalls() {
+    createWall() {
+      const wall1 = new Wall(this.ctx, 0, 0, 70, 70, 'bricks.png')
+      const wall2 = new Wall(this.ctx, 200, 300, 70, 70, 'bricks.png')
+      const wall3 = new Wall(this.ctx, 700, 500, 70, 70, 'bricks.png')
 
-
-  // }
+      this.wall.push(wall1, wall2, wall3)
+   },
 
     createPlayer() {
 
@@ -76,12 +81,21 @@ const Game = {
       this.clearScreen()
       this.player.draw()
       this.enemy.forEach(elm => elm.draw())
+      this.wall.forEach(elm => elm.draw())
+    
       }, 70)
   },
     
     clearScreen() {
       this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
     },
-    
-    
+
+    // isCollision() {
+    //   if (this.playerPos.x < this.wallPos.x + this.wallPos.width &&
+    //     this.playerPos.x + this.playerPos.width > this.wallPos.x &&
+    //     this.playerPos.y < this.wallPos.y + this.wallPos.height &&
+    //     this.playerPos.height + this.playerPos.y > this.wallPos.y) {
+    //     console.log("colision")
+    //  }
+    // }
 }  

@@ -50,39 +50,32 @@ const Game = {
     let trackPosX = this.player.playerPos.x
     let trackPosY = this.player.playerPos.y
     let trackSpeed = this.player.playerSpeed
-    //console.log (this.touchesWalls())
     
     document.onkeydown = e => {
       switch (e.key) {
         case this.keys.top:
               
-              trackPosY -= trackSpeed   
-          if (!this.touchesWalls({ ...this.player, playerPos:{x:this.player.playerPos.x , y: trackPosY }})) {
-            console.log("top")
+              trackPosY = this.player.playerPos.y  
+          if (!this.touchesWalls({ ...this.player, playerPos:{x:this.player.playerPos.x , y: trackPosY - trackSpeed }})) {
             this.player.move('top')
-            // console.log("Player.x: ", this.player.playerPos.x, "Player.y: ", this.player.playerPos.y, "TrackPosX: ", trackPosX, "TrackPosY: ", trackPosY)          
           } 
           break;
         case this.keys.left:
-          trackPosX -= trackSpeed     
-          if (!this.touchesWalls({ ...this.player, playerPos:{x:trackPosX, y: this.player.playerPos.y }})) {
-            console.log("left")
+          trackPosX = this.player.playerPos.x    
+          if (!this.touchesWalls({ ...this.player, playerPos:{x:trackPosX - trackSpeed, y: this.player.playerPos.y }})) {
             this.player.move('left')
-            // console.log("Player.x: ", this.player.playerPos.x, "Player.y: ", this.player.playerPos.y, "TrackPosX: ", trackPosX, "TrackPosY: ", trackPosY)     
           }
           break;
         case this.keys.right:
-          trackPosX += trackSpeed        
-          if (!this.touchesWalls({ ...this.player, playerPos:{x:trackPosX, y: this.player.playerPos.y }})) {
-            console.log("right")
+          trackPosX = this.player.playerPos.x       
+          if (!this.touchesWalls({ ...this.player, playerPos:{x:trackPosX + trackSpeed, y: this.player.playerPos.y }})) {
             this.player.move('right')
                        
           }
           break;
         case this.keys.bottom:
-          trackPosY += trackSpeed         
-          if (!this.touchesWalls({ ...this.player, playerPos:{x:this.player.playerPos.x , y: trackPosY }}))  {
-            console.log("botton")
+          trackPosY = this.player.playerPos.y         
+          if (!this.touchesWalls({ ...this.player, playerPos:{x:this.player.playerPos.x , y: trackPosY + trackSpeed }}))  {
             this.player.move('bottom')
                         
           }

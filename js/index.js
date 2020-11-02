@@ -1,3 +1,4 @@
+
 const Game = {
   name: 'Drawing app',
   description: 'Canvas app for basic shapes drawing',
@@ -11,13 +12,14 @@ const Game = {
       h: undefined
   },
   frames: 0,
-  player: undefined,
   keys: {
     top: 'ArrowUp',
     bottom:'ArrowDown',
     left: 'ArrowLeft',
     right: 'ArrowRight'
   },
+  player: undefined,
+  popino: undefined,
   enemy: [],
   wall:[],
 
@@ -26,11 +28,14 @@ const Game = {
     this.ctx = this.canvasTag.getContext('2d');
     this.setDimensions()
     this.createPlayer()
+    this.createPopino()
+    this.createChest()
     this.drawAll() 
     this.setEventListeners()
     this.generateEnemy()
     this.createWall()
-    this.isCollision()
+    
+   // this.isCollision()
     
   },
 
@@ -41,18 +46,60 @@ const Game = {
     this.canvasTag.setAttribute('height', this.canvasSize.h)
   },
   
-  setEventListeners() { 
-    document.onkeydown = e => {
-      console.log(this.isCollision()) 
-     e.key === this.keys.top ? this.player.move('top'): null 
-     e.key === this.keys.bottom ? this.player.move('bottom'): null
-     e.key === this.keys.left ? this.player.move('left') :null
-     e.key === this.keys.right && !this.isCollision() ? this.player.move('right') : null
+  setEventListeners() {
+    let trackPosX = this.player.playerPos.x
+    let trackPosY = this.player.playerPos.y
+    let trackSpeed = this.player.playerSpeed
+    //console.log (this.touchesWalls())
     
+    document.onkeydown = e => {
+      switch (e.key) {
+        case this.keys.top:
+              
+              trackPosY -= trackSpeed   
+          if (!this.touchesWalls({ ...this.player, playerPos:{x:this.player.playerPos.x , y: trackPosY }})) {
+            console.log("top")
+            this.player.move('top')
+            // console.log("Player.x: ", this.player.playerPos.x, "Player.y: ", this.player.playerPos.y, "TrackPosX: ", trackPosX, "TrackPosY: ", trackPosY)          
+          } 
+          break;
+        case this.keys.left:
+          trackPosX -= trackSpeed     
+          if (!this.touchesWalls({ ...this.player, playerPos:{x:trackPosX, y: this.player.playerPos.y }})) {
+            console.log("left")
+            this.player.move('left')
+            // console.log("Player.x: ", this.player.playerPos.x, "Player.y: ", this.player.playerPos.y, "TrackPosX: ", trackPosX, "TrackPosY: ", trackPosY)     
+          }
+          break;
+        case this.keys.right:
+          trackPosX += trackSpeed        
+          if (!this.touchesWalls({ ...this.player, playerPos:{x:trackPosX, y: this.player.playerPos.y }})) {
+            console.log("right")
+            this.player.move('right')
+                       
+          }
+          break;
+        case this.keys.bottom:
+          trackPosY += trackSpeed         
+          if (!this.touchesWalls({ ...this.player, playerPos:{x:this.player.playerPos.x , y: trackPosY }}))  {
+            console.log("botton")
+            this.player.move('bottom')
+                        
+          }
+          break;
+              
+      }
     }
-
   },
-   
+
+
+  //    e.key === this.keys.top && !this.touchesWalls() ? this.player.move('top'): null 
+  //    e.key === this.keys.bottom && !this.touchesWalls() ? this.player.move('bottom'): null
+  //    e.key === this.keys.left && !this.touchesWalls() ? this.player.move('left') :null
+  //    e.key === this.keys.right && !this.touchesWalls() ? this.player.move('right') : null
+    
+  //  }
+
   createWall() {
     const wall1 = new Wall(this.ctx, 0, 0, 70, 70, 'bricks.png')
     const wall2 = new Wall(this.ctx, 200, 300, 70, 70, 'bricks.png')
@@ -65,6 +112,14 @@ const Game = {
   createPlayer() {
 
     this.player = new Player (this.ctx, 210, 500, 70, 70, "player.png");
+  },
+  createPopino() {
+
+    this.popino = new Popino (this.ctx, 950, 20, 50, 50, "popino.png");
+  },
+  createChest() {
+
+    this.chest = new Chest (this.ctx, 950, 500, 50, 50, "chest.png");
   },
   
   generateEnemy() {
@@ -80,6 +135,8 @@ const Game = {
     this.frames++
     this.clearScreen()
     this.player.draw()
+    this.popino.draw()
+    this.chest.draw()
     this.enemy.forEach(elm => elm.draw())
     this.wall.forEach(elm => elm.draw())
   
@@ -88,20 +145,22 @@ const Game = {
   
   clearScreen() {
     this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
+},
+touchesWalls(player) {
+    //  console.log("touche-player", player, this.wall)
+     return this.wall.some(wall => this.isCollision(player, wall));
   },
 
-  isCollision() {
-    return this.wall.some(wall => {
-      console.log("MURO: " + wall.wallPos.x)
-      console.log("PLAYER PSUMA: " + (this.player.playerPos.x + this.player.playerSize.w))
-      console.log("PLAYER Y: " + this.player.playerPos.y)
-      console.log("MURO SUMA: " +  (wall.wallPos.x + wall.wallSize.w))
-      return (
-      
-        this.player.playerPos.x + this.player.playerSize.w >= wall.wallPos.x &&
-        this.player.playerPos.x < wall.wallPos.x + wall.wallSize.w
-      );   
-    });
+  isCollision(player, wall) {
+  // console.log("isCollision- Player", player)
+    return (
+    
+      player.playerPos.x + player.playerSize.w >= wall.wallPos.x &&
+      player.playerPos.x < wall.wallPos.x + wall.wallSize.w &&
+      player.playerPos.y + player.playerSize.h >= wall.wallPos.y &&
+      player.playerPos.y < wall.wallPos.y + wall.wallSize.h
+    );
   }
+
 
 } 

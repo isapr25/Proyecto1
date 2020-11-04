@@ -1,4 +1,3 @@
-
 const Game = {
   name: 'Drawing app',
   description: 'Canvas app for basic shapes drawing',
@@ -8,37 +7,40 @@ const Game = {
   canvasTag: undefined,
   ctx: undefined,
   canvasSize: {
-      w: undefined,
-      h: undefined
+    w: undefined,
+    h: undefined
   },
   frames: 0,
   keys: {
     top: 'ArrowUp',
-    bottom:'ArrowDown',
+    bottom: 'ArrowDown',
     left: 'ArrowLeft',
     right: 'ArrowRight'
   },
   player: undefined,
   popino: undefined,
   enemy: [],
-  wall:[],
+  wall: [],
 
   init(id) {
+    
     this.canvasTag = document.getElementById(id);
     this.ctx = this.canvasTag.getContext('2d');
-    this.setDimensions()
+    this.setDimensions()  
+    this.start()  
+  },
+  start(){
+    this.reset()
     this.createPlayer()
     this.createPopino()
     this.createChest()
-    this.drawAll() 
+    this.createWall() 
+    this.drawAll()
     this.setEventListeners()
     this.generateEnemy()
-    this.createWall()
-    
-   // this.isCollision()
-    
-  },
+  
 
+  },
   setDimensions() {
     this.canvasSize.w = 1050
     this.canvasSize.h = 700
@@ -51,31 +53,37 @@ const Game = {
     let trackPosY = this.player.playerPos.y
     let trackSpeed = this.player.playerSpeed
     
+    
     document.onkeydown = e => {
       switch (e.key) {
         case this.keys.top:
               
-              trackPosY = this.player.playerPos.y  
-          if (!this.touchesWalls({ ...this.player, playerPos:{x:this.player.playerPos.x , y: trackPosY - trackSpeed }})) {
+          trackPosY = this.player.playerPos.y
+          if (!this.touchesWalls({ ...this.player, playerPos: { x: this.player.playerPos.x, y: trackPosY - trackSpeed } })) {
+            
             this.player.move('top')
-          } 
+                    
+          }
           break;
         case this.keys.left:
-          trackPosX = this.player.playerPos.x    
-          if (!this.touchesWalls({ ...this.player, playerPos:{x:trackPosX - trackSpeed, y: this.player.playerPos.y }})) {
+          trackPosX = this.player.playerPos.x
+          if (!this.touchesWalls({ ...this.player, playerPos: { x: trackPosX - trackSpeed, y: this.player.playerPos.y } })) {
+            
             this.player.move('left')
+            
           }
           break;
         case this.keys.right:
-          trackPosX = this.player.playerPos.x       
-          if (!this.touchesWalls({ ...this.player, playerPos:{x:trackPosX + trackSpeed, y: this.player.playerPos.y }})) {
+          trackPosX = this.player.playerPos.x
+          if (!this.touchesWalls({ ...this.player, playerPos: { x: trackPosX + trackSpeed, y: this.player.playerPos.y } })) {
+
             this.player.move('right')
                        
           }
           break;
         case this.keys.bottom:
-          trackPosY = this.player.playerPos.y         
-          if (!this.touchesWalls({ ...this.player, playerPos:{x:this.player.playerPos.x , y: trackPosY + trackSpeed }}))  {
+          trackPosY = this.player.playerPos.y
+          if (!this.touchesWalls({ ...this.player, playerPos: { x: this.player.playerPos.x, y: trackPosY + trackSpeed } })) {
             this.player.move('bottom')
                         
           }
@@ -85,67 +93,73 @@ const Game = {
     }
   },
 
-
-  //    e.key === this.keys.top && !this.touchesWalls() ? this.player.move('top'): null 
-  //    e.key === this.keys.bottom && !this.touchesWalls() ? this.player.move('bottom'): null
-  //    e.key === this.keys.left && !this.touchesWalls() ? this.player.move('left') :null
-  //    e.key === this.keys.right && !this.touchesWalls() ? this.player.move('right') : null
-    
-  //  }
-
   createWall() {
-    const wall1 = new Wall(this.ctx, 0, 0, 70, 70, 'bricks.png')
-    const wall2 = new Wall(this.ctx, 200, 300, 70, 70, 'bricks.png')
-    const wall3 = new Wall(this.ctx, 700, 500, 70, 70, 'bricks.png')
+    const wall1 = new Wall(this.ctx, 0, 0, 1050, 70, 'bricks1.png')
+    const wall2 = new Wall(this.ctx, 0, 0, 10, 700, 'bricks1.png')
+    const wall3 = new Wall(this.ctx, 1040, 0, 10, 700, 'bricks1.png')
+    const wall4 = new Wall(this.ctx, 0, 650, 440, 70, 'bricks1.png')
+    const wall5 = new Wall(this.ctx, 610, 650, 440, 70, 'bricks1.png')
+    const wall6 = new Wall(this.ctx, 870, 420, 80, 100, 'bricks1.png')
+    const wall7 = new Wall(this.ctx, 870, 140, 80, 100, 'bricks1.png')
+    const wall8 = new Wall(this.ctx, 110, 150, 80, 250, 'bricks1.png')
+    const wall9 = new Wall(this.ctx, 440, 150, 80, 250, 'bricks1.png')
+    const wall10 = new Wall(this.ctx, 110, 150, 400, 40, 'bricks1.png')
+    const wall11 = new Wall(this.ctx, 110, 310, 150, 80, 'bricks1.png')
+    const wall12 = new Wall(this.ctx, 370, 310, 150, 80, 'bricks1.png')
+    const wall13 = new Wall(this.ctx, 20, 150, 70, 10, 'bricks1.png')
+    const wall14 = new Wall(this.ctx, 0, 480, 240, 10, 'bricks1.png')
+    const wall15 = new Wall(this.ctx, 360, 480, 400, 10, 'bricks1.png')
+    const wall16 = new Wall(this.ctx, 720, 320, 50, 180, 'bricks1.png')
+    const wall17 = new Wall(this.ctx, 720, 50, 50, 180, 'bricks1.png')
 
-    this.wall.push(wall1, wall2, wall3)
+    this.wall.push(wall1, wall2, wall3, wall4,wall5, wall6, wall7, wall8, wall9, wall10, wall11, wall12,wall13,wall14,wall15, wall16,wall17)
     
- },
+  },
 
   createPlayer() {
 
-    this.player = new Player (this.ctx, 210, 500, 70, 70, "player.png");
+    this.player = new Player(this.ctx, 500, 590, 70, 70, "player.png");
   },
   createPopino() {
 
-    this.popino = new Popino (this.ctx, 950, 20, 50, 50, "popino.png");
+    this.popino = new Popino(this.ctx, 290, 250, 50, 50, "popino.png");
   },
   createChest() {
 
-    this.chest = new Chest (this.ctx, 950, 500, 50, 50, "chest.png");
+    this.chest = new Chest(this.ctx, 960, 50, 50, 50, "chest.png");
   },
   
   generateEnemy() {
-    const enemy1 = new Enemy(this.ctx, this.canvasSize, 0, 0, 70, 70, 4, 'enemy.png')
-    const enemy2 = new Enemy(this.ctx, this.canvasSize, 0, 300, 70, 70, 7, 'enemy.png')
-    const enemy3 = new Enemy(this.ctx, this.canvasSize, 0, 500, 70, 70, 3, 'enemy.png')
+    const enemy1 = new Enemy(this.ctx, this.canvasSize, 15, 72, 70, 70, 4, 'enemy.png')
+    const enemy2 = new Enemy(this.ctx, this.canvasSize, 600, 240, 70, 70, 7, 'enemy.png')
+    const enemy3 = new Enemy(this.ctx, this.canvasSize, 15, 500, 70, 70, 3, 'enemy.png')
 
     this.enemy.push(enemy1, enemy2, enemy3)
   },
   
   drawAll() {
-    setInterval(() => {
-    this.frames++
-    this.clearScreen()
-    this.player.draw()
-    this.popino.draw()
-    this.chest.draw()
-    this.enemy.forEach(elm => elm.draw())
-    this.wall.forEach(elm => elm.draw())
-  
+    this.interval = setInterval(() => {
+      this.frames++
+      this.clearScreen()
+      this.player.draw()
+      this.popino.draw()
+      this.chest.draw()
+      this.enemy.forEach(elm => elm.draw())
+      this.wall.forEach(elm => elm.draw())
+      this.moveEnemyWall(this.enemy)
+      this.enemyCatchPlayer(this.player) ? this.gameOver(): null
     }, 70)
   },
   
   clearScreen() {
     this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
-},
-touchesWalls(player) {
-    //  console.log("touche-player", player, this.wall)
-     return this.wall.some(wall => this.isCollision(player, wall));
+  },
+  touchesWalls(player) {
+  
+    return this.wall.some(wall => this.isCollision(player, wall));
   },
 
   isCollision(player, wall) {
-  // console.log("isCollision- Player", player)
     return (
     
       player.playerPos.x + player.playerSize.w >= wall.wallPos.x &&
@@ -153,7 +167,53 @@ touchesWalls(player) {
       player.playerPos.y + player.playerSize.h >= wall.wallPos.y &&
       player.playerPos.y < wall.wallPos.y + wall.wallSize.h
     );
-  }
+  },
+  
+  moveEnemyWall(enemies) {
+    enemies.some(enemy => enemy.moveEnemy(this.touchesWallsEnemy(enemy)));
+  },
 
+  touchesWallsEnemy(enemy) {
+    return this.wall.some(wall => this.isCollisionEnemy(enemy, wall));
+  },
 
+  isCollisionEnemy(enemy, wall) {
+    return (
+    
+      enemy.enemyPos.x + enemy.enemySize.w >= wall.wallPos.x &&
+      enemy.enemyPos.x < wall.wallPos.x + wall.wallSize.w &&
+      enemy.enemyPos.y + enemy.enemySize.h >= wall.wallPos.y &&
+      enemy.enemyPos.y < wall.wallPos.y + wall.wallSize.h
+    );
+  },
+
+  isCollisionPlayer(enemy, player) {
+    //return this.enemy.some(enemy => {
+      return (
+    
+      enemy.enemyPos.x + enemy.enemySize.w >= player.playerPos.x &&
+      enemy.enemyPos.x < player.playerPos.x + player.playerSize.w &&
+      enemy.enemyPos.y + enemy.enemySize.h >= player.playerPos.y &&
+      enemy.enemyPos.y < player.playerPos.y + player.playerSize.h
+      );
+  },
+   enemyCatchPlayer(player) {
+    return this.enemy.some(enemy => this.isCollisionPlayer(enemy, player));
+  },
+  
+  gameOver() {
+    clearInterval(this.interval);
+    alert('Has perdido')
+    this.start()
+   },
+  
+   reset() {
+    this.clearScreen()
+    this.createPlayer()
+    this.createPopino()
+    this.createChest()
+    this.generateEnemy()
+    this.createWall() 
+   }
+  
 } 

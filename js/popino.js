@@ -37,8 +37,9 @@ class Popino {
       }
     }, 20);
     if (this.popinoPos.x > (x-10) && this.popinoPos.y > (y-10)) {
+        return true
         
-      alert("Has rescatado a Popino!");
+      //alert("Has rescatado a Popino!");
     }
   }
     

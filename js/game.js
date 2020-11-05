@@ -161,9 +161,9 @@ const Game = {
       const enemy7 = new Enemy(this.ctx, this.canvasSize, 960, 570, 60, 60, 7, 'x','enemy.png')
       const enemy8 = new Enemy(this.ctx, this.canvasSize, 960, 140, 60, 60, 2, 'y','enemy.png')
     
-      this.randomEnemy.push(enemy1, enemy2, enemy3,enemy4, enemy5, enemy6,enemy7,enemy8)
-      this.shuffleArray(this.randomEnemy)
-      this.enemy.push(this.randomEnemy[0],this.randomEnemy[1], this.randomEnemy[2], this.randomEnemy[3], this.randomEnemy[4])
+    //   this.randomEnemy.push(enemy1, enemy2, enemy3,enemy4, enemy5, enemy6,enemy7,enemy8)
+    //   this.shuffleArray(this.randomEnemy)
+    //   this.enemy.push(this.randomEnemy[0],this.randomEnemy[1], this.randomEnemy[2], this.randomEnemy[3], this.randomEnemy[4])
   
     },
     shuffleArray(array){
@@ -296,7 +296,13 @@ const Game = {
     freePopino() {
       if (this.playerGetPopino()) {
         this.popino.move(500,570);
+        if (this.popino.move(500,570)){
+            clearInterval(this.interval);
+      document.querySelector(".win").classList.toggle("hidden")
+      document.querySelector("#myCanvas").classList.toggle("hidden")
+        }
       }
+      
   
     },
     enemyCatchPlayer(player) {

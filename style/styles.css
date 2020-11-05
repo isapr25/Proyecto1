@@ -111,3 +111,15 @@ h2 {
         text-transform: uppercase;
         color: #fff;
     }
+    #win-button {
+        display: block;
+        width: 300px;
+        text-align: center;
+        padding: 10px;
+        margin: 10px auto;
+        font-family: 'Rye';
+        font-size: 2em;
+        background-color: rgb(72, 88, 43);
+        text-transform: uppercase;
+        color: #fff;
+    }

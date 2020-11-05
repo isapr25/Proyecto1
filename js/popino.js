@@ -38,9 +38,7 @@ class Popino {
     }, 20);
     if (this.popinoPos.x > (x-10) && this.popinoPos.y > (y-10)) {
         
-        clearInterval(this.interval);
-        document.querySelector(".win").classList.toggle("hidden")
-        document.querySelector("#myCanvas").classList.toggle("hidden")
+      alert("Has rescatado a Popino!");
     }
   }
     

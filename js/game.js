@@ -35,10 +35,22 @@ const Game = {
       document.querySelector("#end-button").addEventListener("click", () => {
         document.querySelector(".game-over").classList.toggle("hidden")
         document.querySelector("#myCanvas").classList.toggle("hidden")
-        
+
         this.start();
           
         })
+      document.querySelector("#win-button").addEventListener("click", () => {
+      document.querySelector(".win").classList.toggle("hidden")
+      document.querySelector(".game-intro").classList.toggle("hidden")
+    
+            this.start();
+              
+            })
+     document.getElementById('winSound').pause()
+     document.getElementById('gameOverSound').pause()
+     document.getElementById('gameSound').play()
+     
+
       this.start()  
     },
     start(){
@@ -114,8 +126,8 @@ const Game = {
       const wall1 = new Wall(this.ctx, 0, 0, 1050, 70, 'bricks1.png')
       const wall2 = new Wall(this.ctx, 0, 0, 10, 700, 'bricks1.png')
       const wall3 = new Wall(this.ctx, 1040, 0, 10, 700, 'bricks1.png')
-      const wall4 = new Wall(this.ctx, 0, 650, 440, 70, 'bricks1.png')
-      const wall5 = new Wall(this.ctx, 610, 650, 440, 70, 'bricks1.png')
+      const wall4 = new Wall(this.ctx, 0, 670, 440, 70, 'bricks1.png')
+      const wall5 = new Wall(this.ctx, 610, 670, 440, 70, 'bricks1.png')
       const wall6 = new Wall(this.ctx, 870, 420, 80, 100, 'bricks1.png')
       const wall7 = new Wall(this.ctx, 870, 140, 80, 100, 'bricks1.png')
       const wall8 = new Wall(this.ctx, 110, 150, 80, 250, 'bricks1.png')
@@ -125,7 +137,7 @@ const Game = {
       const wall12 = new Wall(this.ctx, 370, 310, 80, 80, 'bricks1.png')
       const wall13 = new Wall(this.ctx, 20, 150, 70, 10, 'bricks1.png')
       const wall14 = new Wall(this.ctx, 0, 500, 240, 10, 'bricks1.png')
-      const wall15 = new Wall(this.ctx, 360, 500, 400, 10, 'bricks1.png')
+      const wall15 = new Wall(this.ctx, 370, 500, 380, 10, 'bricks1.png')
       const wall16 = new Wall(this.ctx, 720, 320, 50, 180, 'bricks1.png')
       const wall17 = new Wall(this.ctx, 720, 50, 50, 180, 'bricks1.png')
       const wall18 = new Wall(this.ctx, 960, 52, 50, 50, 'bricks1.png')
@@ -140,7 +152,7 @@ const Game = {
     },
     createPopino() {
   
-      this.popino = new Popino(this.ctx, 290, 250, 50, 50, "popino.png", 7,'x');
+      this.popino = new Popino(this.ctx, 290, 250, 50, 50, "./img/popino1.png", 7,'x');
     },
     createChest() {
   
@@ -161,9 +173,9 @@ const Game = {
       const enemy7 = new Enemy(this.ctx, this.canvasSize, 960, 570, 60, 60, 7, 'x','enemy.png')
       const enemy8 = new Enemy(this.ctx, this.canvasSize, 960, 140, 60, 60, 2, 'y','enemy.png')
     
-    //   this.randomEnemy.push(enemy1, enemy2, enemy3,enemy4, enemy5, enemy6,enemy7,enemy8)
-    //   this.shuffleArray(this.randomEnemy)
-    //   this.enemy.push(this.randomEnemy[0],this.randomEnemy[1], this.randomEnemy[2], this.randomEnemy[3], this.randomEnemy[4])
+      this.randomEnemy.push(enemy1, enemy2, enemy3,enemy4, enemy5, enemy6,enemy7,enemy8)
+      this.shuffleArray(this.randomEnemy)
+      this.enemy.push(this.randomEnemy[0],this.randomEnemy[1], this.randomEnemy[2], this.randomEnemy[3], this.randomEnemy[4])
   
     },
     shuffleArray(array){
@@ -178,7 +190,7 @@ const Game = {
         this.frames++
         this.clearScreen()
         this.player.draw(this.frames)
-        this.popino.draw()
+        this.popino.draw(this.frames)
         this.chest.draw()
         this.door.draw()
         this.enemy.forEach(elm => elm.draw())
@@ -300,6 +312,8 @@ const Game = {
             clearInterval(this.interval);
       document.querySelector(".win").classList.toggle("hidden")
       document.querySelector("#myCanvas").classList.toggle("hidden")
+      document.getElementById('gameSound').pause()
+      document.getElementById('winSound').play()
         }
       }
       
@@ -313,8 +327,8 @@ const Game = {
       clearInterval(this.interval);
       document.querySelector(".game-over").classList.toggle("hidden")
       document.querySelector("#myCanvas").classList.toggle("hidden")
-      
-     
+      document.getElementById('gameSound').pause()
+      document.getElementById('gameOverSound').play()
       
      },
     
